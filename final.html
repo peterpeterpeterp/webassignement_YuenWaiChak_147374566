@@ -1,0 +1,759 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>webassignment1</title>
+<link href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
+
+
+<script src="http://code.jquery.com/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+
+<script>
+$(document).ready(function() {
+
+
+	
+
+$("#Addcomment").click(function(){
+
+var URLs = "newoverall.php";
+var a = $('#insertcomment').val();
+var b = localStorage.getItem("abc");
+var myData = "comment="+ a +"&userid=" + b;
+
+$.ajax({
+	url: URLs,
+	data: myData,
+	type:"POST",
+	dataType:'text',
+	
+	success: function(msg) {
+
+		if (msg != ""){
+		$.getJSON('commentlist.php?userid='+b+'', function(data) {
+		              $.each(data, function(key, c) {
+					 
+							$("#commentlist").append("<li><h4>Name:"+c.comment_writer+"<br>comment:"+c.comment+"</h4><a href=\"delete.php?comment="+ c.comment +"\">Remove</a></li>");
+                       });
+				});
+		}
+		else {
+			alert(msg);
+		}
+	},
+	error:function(xhr, ajaxOptions, thrownError){
+		alert(xhr.status);
+		alert(thrownError);
+	}
+});
+});
+
+
+	var loggedname = localStorage.getItem("abc");
+	$("#msg").html(""+loggedname);
+$("#submit").click(function(){
+var URLs = "overall.php";
+var a = $('#Login').val();
+var b = $('#Password').val();
+var myData = "userid="+ a + "&password=" + b;
+
+$.ajax({
+	url: URLs,
+	data: myData,
+	type:"GET",
+	dataType:'text',
+	
+	success: function(msg) {
+
+		
+		if (msg==1){
+			localStorage.setItem("abc", a);
+			window.location="final.html";	
+		} 
+		else{
+			alert("Username or password is wrong");
+		}
+	},
+	error:function(xhr, ajaxOptions, thrownError){
+		alert(xhr.status);
+		alert(thrownError);
+	}
+});
+});
+$("#logout").click(function(){
+	localStorage.setItem("abc", '');
+	window.location= "final.html";
+});
+
+$("#register").click(function(){
+var URLs = "overall.php";
+var a = $('#Registername').val();
+var b = $('#Registerpassword').val();
+var myData = "userid="+ a + "&password=" + b;
+
+$.ajax({
+	url: URLs,
+	data: myData,
+	type:"POST",
+	dataType:'text',
+	
+	success: function(msg) {
+		if (msg==1){
+			window.location="final.html";	
+		}
+		else {
+			alert(msg);
+		}
+	},
+	error:function(xhr, ajaxOptions, thrownError){
+		alert(xhr.status);
+		alert(thrownError);
+	}
+});
+});
+
+
+});
+</script>
+
+ 
+
+
+
+
+
+
+</head> 
+<body> 
+
+<div data-role="page" id="page">
+<div data-role="panel" id="myPanel"> 
+    
+  </div> 
+	<div data-role="header" >
+    
+ 		
+		<h1>< About "DRUGS TAKING" >
+        
+        <div id="msg"><div></h1>
+        <a href="#page17">Login</a>
+        <input id = "logout" type="button" value="Logout">
+        
+	</div>
+	<div data-role="content">
+    	<header data-role='header'>
+        <h1><img src="../../../extremefinal/drugs/drugs1.jpg"  width="350" height="225"class="align-right"/>
+        <img src="../../../extremefinal/drugs/drug2.jpg"  width="350" height="225"class="align-right"/></h1>
+        
+        </header>
+		<ul data-role="listview">
+			<li><a href="#page2">Introduction</a></li>
+            <li><a href="#page3">Drugs Details</a></li>
+			<li><a href="#page4">Consequences Of Drug Use</a></li>
+            <li><a href="#page5">Drug Rehabilitation Centre</a></li>
+		</ul>		
+	</div>
+	<div data-role="footer">
+		<h4>All Right Reserved. </h4>
+	</div>
+    
+</div>
+
+<div data-role="page" id="page2">
+	<div data-role="header">
+     <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Introduction</h1>
+	</div>
+	<div data-role="content">
+
+		<h2>About This Website</h2>    
+        <div><h5>Nowadyas, drugs abuse cases are increasing, and teenagers are easily to get drugs around us. So we need to take more care about or next generation and their future. This website is going to list the type and effects of each drugs common nowadays, and providing links and telephone number to contact with us and the Drug Rehabilitation Centres. We are hoping citizen like you and me can " SAY NO TO DRUGS!" </h5>	</div>
+	</div>
+	<div data-role="footer">
+    <h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+    </div>
+  </div>
+</div>
+
+<div data-role="page" id="page3">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Drugs Details</h1>
+	</div>
+
+    <h2>Names Of Drugs</h2>
+    <div data-role="main" class="ui-content">
+    <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+    <li><a href="#page6">Cathinone and its derivatives</a></li>
+      <li><a href="#page7">Cocaine</a></li>
+      <li><a href="#page8">Cough Medicine</a></li>
+      <li><a href="#page9">Ecstasy/MDMA</a></li>
+      <li><a href="#page10">Gamma-hydroxybutyric acid (GHB) and Gamma-butyrolactone (GBL)</a></li>
+      <li><a href="#page11">Heroin</a></li>
+      <li><a href="#page12">Ketamine</a></li>
+      <li><a href="#page14">Salvia divinorum</a></li>
+      <li><a href="#page15">Synthetic cannabinoids</a></li>
+      <li><a href="#page16">Trifluoromethylphenylpiperazine (TFMPP) and other piperazine derivatives</a></li>
+ 
+    </ul>	
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page4">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Consequences Of Drug Use</h1>
+	</div>
+	<div data-role="content">	
+    <h1>-Watch Before You Decided to Take Drugs-</h1>
+		<iframe width="420" height="345"
+src="https://www.youtube.com/embed/ka5j6WxMRR8">
+</iframe>
+
+	<h3></h3>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+   
+<div data-role="page" id="page5">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Drug Rehabilitation Centre</h1>
+	</div>
+	<div data-role="content">	
+		<h5>Counselling Centres for Psychotropic Substance Abusers:</h5>
+    <ol data-role="listview">
+      <li><a href="#page19" >Tung Wah Group of Hospitals CROSS Centre</a></li>
+      <li><a href="#page20">Hong Kong Lutheran Social Service
+Rainbow Lutheran Centre</a></li>
+      <li><a href="#page21">Caritas HUGS Centre</a></li>
+       <li><a href="#page22">Hong Kong Lutheran Social Service
+Cheer Lutheran Centre</a></li>
+    </ol>
+    <h5>Treatment centres / Halfway houses ( For Male ):</h5>
+    <ol data-role="listview">
+      <li><a href="#page23">Caritas - Hong Kong</a></li>
+      <li><a href="#page24">Mission Ark</a></li>
+      <li><a href="#page25">Christian New Being Fellowship</a></li>
+    </ol>
+    
+     <h5>Treatment centres / Halfway houses ( For Both Male & Female ):</h5>
+    <ol data-role="listview">
+      <li><a href="#page26">Christian Zheng Sheng Association</a></li>
+      <li><a href="#page27">Operation Dawn</a></li>
+      <li><a href="#page28">St Stephen's Society</a></li>
+    </ol>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="page6">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Cathinone and its derivatives</h1>
+   
+	</div>
+	<div data-role="content">	
+    <img src= "../../../extremefinal/drugs/Cathinone1.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/Cathinone2.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/Cathinone3.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/Cathinone4.jpg"  width="200" height="190"class="align-right"/>
+		<p>Cathinone are usually used as recreational drugs for the stimulant effects. To conceal the real content, these drugs are usually sold as “research chemicals”, or packaged to contain innocuous compounds such as “plant food” or “bath salt”. The drugs are usually sniffed in, or taken orally or through other means.</p>
+        
+   	<h4>Effects :
+Abusers may experience altered level of consciousness, memory problems, blood circulation problems, erratic behaviour, hallucinations and delusions. </h4>
+ 
+  Comment
+  <ul id="commentlist">
+  </ul>
+  <div id="Comment"></div>
+	   <input type="text" name="Comment" id="insertcomment">
+      </br>
+ <button id="Addcomment">Add Comment</button>
+ 
+ 
+
+ 
+ 
+ 
+ 
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="page7">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Cocaine</h1>
+	</div>
+	<div data-role="content">	
+   	 <img src= "../../../extremefinal/drugs/Cocaine1.jpg"  width="200" height="190"class="align-right"/>
+     <img src= "../../../extremefinal/drugs/Cocaine2.jpg"  width="200" height="190"class="align-right"/>
+     <img src= "../../../extremefinal/drugs/Cocaine3.jpg"  width="200" height="190"class="align-right"/>
+     <img src= "../../../extremefinal/drugs/Cocaine4.jpg"  width="200" height="190"class="align-right"/>
+		<p>Cocaine is a white powdery drug extracted from the leaves of coca plant. It is the most powerful naturally derived stimulant, which has properties similar to that of amphetamine. Currently, illicit cocaine is distributed in two forms, namely cocaine powder and crack cocaine.</p>
+
+<h4>Effects :
+Repeated snorting will severely damage the nasal mucous membrane. In general, abusers may experience hallucination, paranoia, aggressive behaviour, insomnia, loss of appetite, depression as well as high blood pressure, racing heartbeat and pupil dilation. Cardiac arrest, respiratory failure or other seizures may also occur in serious cases.	</h4>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="page8">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Cough Medicine</h1>
+	</div>
+	<div data-role="content">	
+    <img src= "../../../extremefinal/drugs/CoughMedicine1.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/CoughMedicine2.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/CoughMedicine3.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/CoughMedicine4.jpg"  width="200" height="190"class="align-right"/>
+    
+		<p>Commercially produced cough medicines contain varying amounts of the powerful narcotic cough suppressant Codeine. Small doses of codeine effectively relieve cough symptoms by interfering with the signals from the brain which trigger reflex coughing. Large doses produce a euphoric high and youths abuse cough medicine for this purpose. Abuse of Codeine can lead to addiction.</p>
+        
+<h4>Effects :
+Cough Medicine abusers may suffer from drowsiness , respiratory depression , light-headedness , dry mouth , difficulty to urinate , constipation , and loss of appetite . Itchiness of the skin, nausea, vomiting and confusion are common side effects.</h4>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="page9">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Ecstasy/MDMA</h1>
+	</div>
+	<div data-role="content">
+    <img src= "../../../extremefinal/drugs/Ecstasy1.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/Ecstasy2.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/Ecstasy3.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/Ecstasy4.jpg"  width="200" height="190"class="align-right"/>	
+		<p>Ecstasy is a synthetic psychoactive drug, which possesses stimulant and hallucinogenic properties. Widespread illicit use began overseas in the 1980's as MDMA abuse became associated with all-night dance parties called Raves. At Rave parties or Dance parties, ecstasy is taken in tablet or capsule form. Tablets can be any colour and usually have a design imprinted in the surface.
+
+Due to the close links between ecstasy abuse and dance music, tablets and capsules are trafficked at entertainment venues. A Rave party which last many hours can result in ecstasy users being over-active and thus suffering from extreme dehydration, heat exhaustion and in some cases heat stroke.</p>
+
+<h4>Effects :
+Heart rate increases , blood pressure rises and the user sweats, experiences chills and may hallucinate. It is common that users feel great energy and emotion and sensory distortion. As the user 'comes down' nausea, blurred vision, panic attacks; depression and paranoid thoughts can take over. In a few documented cases users have died as a result of dehydration and heat stroke.
+
+Frequent ecstasy use damages the brain and affects production of Seratonin, an important biochemical which controls sleep, learning, emotion, sex drive and pain sensitivity. Although levels in the body drop naturally throughout life, ecstasy use decreases serotonin levels prematurely and frequent users may suffer long-term depression, anxiety, memory loss and other neuropsychotic disorders in later life. </h4>
+
+	
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="page10">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1> (GHB) and (GBL)</h1>
+	</div>
+	<div data-role="content">	
+        <img src= "../../../extremefinal/drugs/GHB1.jpg"  width="200" height="190"class="align-right"/>	
+    <img src= "../../../extremefinal/drugs/GHB2.jpg"  width="200" height="190"class="align-right"/>	
+    <img src= "../../../extremefinal/drugs/GBL1.jpg"  width="200" height="190"class="align-right"/>	
+    <img src= "../../../extremefinal/drugs/GBL2.jpg"  width="200" height="190"class="align-right"/>	
+
+		<p>GHB is normally found as colorless liquid but sometime in powder form. It has a slightly salty taste and it is highly soluble. GHB is a central nervous system suppressant and can relieve anxiety at low dose. As the dosage increases, its sedative effect may result in sleepiness and even coma or death. There are reports from overseas of GHB being surreptitiously slipped into drinks to facilitate sexual assaults. GHB was classified as a dangerous drug under Schedule I of the Dangerous Drugs Ordinance (Cap. 134) in October 2001.</p>
+
+<p>GBL is colourless liquid. It is commonly use as cleaning solvent or superglue remover but s sometimes also as a flavouring agent. When consumed in human, GBL is quickly converted to gamma-hydroxybutyric acid (GHB), which would produce effects similar alcohol. GBL was controlled under the Dangerous Drugs Ordinance since 14 July 2012.</p>
+
+<h4> Effects :
+Abusers may experience vomiting, hypotonia, tremor, epilepsy, aggression, impaired judgement, coma, respiratory depression, hypothermia and bradycardia.</h4>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+
+<div data-role="page" id="page11">
+	<div data-role="header">
+		<h1>Heroin</h1>
+        <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+	</div>
+	<div data-role="content">	
+     <img src= "../../../extremefinal/drugs/Heroin1.jpg"  width="200" height="190"class="align-right"/>
+      <img src= "../../../extremefinal/drugs/Heroin2.jpg"  width="200" height="190"class="align-right"/>	
+       <img src= "../../../extremefinal/drugs/Heroin3.jpg"  width="200" height="190"class="align-right"/>	
+        <img src= "../../../extremefinal/drugs/Heroin4.jpg"  width="200" height="190"class="align-right"/>	
+		<p>Heroin is a highly addictive narcotic drug derived from morphine which in turn is derived from the latex of the opium poppy. Heroin consumed by Hong Kong addicts is manufactured from opium poppies grown in the Golden Triangle and the drug is produced in a high purity (up to 90%), consumption ready state.</p>
+
+<p>In Hong Kong, heroin is normally consumed by injection or burning on tinfoil and inhaling the fumes. Heroin acts fast via either of these methods, taking 7 seconds to reach the brain after smoking or 15-30 seconds if injected.</p>
+
+<h4>Effects :
+Slowed and slurred speech , slow movement, constricted pupils, droopy eyelids, impaired night vision, sedation preceding comatose state and  vomiting. Heroin rapidly causes addiction, impairs the immune system, causes dry, itchy skin, constipation, reduced appetite, irregular heartbeat and blood pressure, menstrual irregularity and decreased sex drive. Repeated injection at the same site causes veins to collapse and septic infection of needle wounds is common. Death can occur from overdoses and diseases such as AIDS can be acquired from sharing needles.</h4>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="page12">
+	<div data-role="header">
+   <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Ketamine</h1>
+	</div>
+	<div data-role="content">	
+     <img src= "../../../extremefinal/drugs/Ketamine1.jpg"  width="200" height="190"class="align-right"/>	
+      <img src= "../../../extremefinal/drugs/Ketamine2.jpg"  width="200" height="190"class="align-right"/>	
+       <img src= "../../../extremefinal/drugs/Ketamine3.jpg"  width="200" height="190"class="align-right"/>	
+        <img src= "../../../extremefinal/drugs/Ketamine4.jpg"  width="200" height="190"class="align-right"/>	
+		<p>Ketamine Hydrochloride is a commercially produced general anaesthetic used mainly for sedating large animals. It is produced as an injectable clear colourless liquid which through evaporation can be converted to a white crystalline powder similar to cocaine hydrochloride. Abusers may experience an "out of body" or "near death" feeling.</p>
+
+<p>In Hong Kong, Ketamine mainly appears in powder form and the most common packaging method is by wrapping in a small piece of paper or a banknote.</p>
+
+<h4>Effects :
+Abusers may suffer from delirium, impaired memory, impaired motor function, respiratory / heart problems / dependence after long-term consumption.</h4>	
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="page14">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Salvia divinorum</h1>
+	</div>
+	<div data-role="content">
+    	<img src= "../../../extremefinal/drugs/Salvia divinorum1.jpg"  width="200" height="190"class="align-right"/>
+        <img src= "../../../extremefinal/drugs/Salvia divinorum2.jpg"  width="200" height="190"class="align-right"/>
+        <img src= "../../../extremefinal/drugs/Salvia divinorum3.jpg"  width="200" height="190"class="align-right"/>
+        <img src= "../../../extremefinal/drugs/Salvia divinorum4.jpg"  width="200" height="190"class="align-right"/>
+		<p>Salvia divinorum (containing active psychoactive molecule salvinorin-A) is an herbal plant originating in Mexico. It is often consumed by inhaling fumes generated from burning the leaves in a tube, or chewing. Smoking for one minute can lead to hallucinations of about 15-20 minutes; and chewing 2-5 grams of its dried leaves or 10-30 grams of its fresh leaves would produce extended hallucination of low to medium potency. Salvia divinorum and salvinorin-A are controlled under the Dangerous Drugs Ordinance since 14 July 2012.</p>
+
+<h4>Effects :
+Abusers may experience uncoordinated bodily movements, vertigo and slurred speech.</h4>	
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="page15">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Synthetic cannabinoids</h1>
+	</div>
+	<div data-role="content">	
+    <img src= "../../../extremefinal/drugs/Synthetic cannabinoids1.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/Synthetic cannabinoids2.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/Synthetic cannabinoids3.jpg"  width="200" height="190"class="align-right"/>
+    <img src= "../../../extremefinal/drugs/Synthetic cannabinoids4.jpg"  width="200" height="190"class="align-right"/>
+		<p>Synthetic cannabinoids are functionally similar to tetrahydrocannabinol (THC) - the active ingredients of cannabis. The harmful effects, propensity for misuse and addictive potency of synthetic cannabinoids are comparable with those of cannabis. The form of synthetic cannabinoids has been evolving around the world. Several types of generic definitions of synthetic cannabinoids and listed substances are controlled under the Dangerous Drugs Ordinance (DDO) since 1 April 2011.</p>
+
+<h4>Effects :
+Abusers may experience hallucination, increased agitation, elevated blood pressure and heart rates, and seizures.	</h4>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="page16">
+	<div data-role="header">
+   <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1> (TFMPP) and other piperazine derivatives</h1>
+	</div>
+	<div data-role="content">	
+     <img src= "../../../extremefinal/drugs/TFMPP1.jpg"  width="200" height="190"class="align-right"/>
+      <img src= "../../../extremefinal/drugs/TFMPP2.jpg"  width="200" height="190"class="align-right"/>
+       <img src= "../../../extremefinal/drugs/TFMPP3.jpg"  width="200" height="190"class="align-right"/>
+        <img src= "../../../extremefinal/drugs/TFMPP4.jpg"  width="200" height="190"class="align-right"/>
+        
+		<p>TFMPP is a piperazine-based drug, which is used as recreational drug for its stimulant effects. TFMPP and other piperazine derivatives are controlled under the Dangerous Drugs Ordinance since 1 April 2011.</p>
+
+<h4>Effects :
+Abusers may experience vomiting, headache, palpitations, anxiety, insomnia, confusion irritability and tremors, and grand mal seizures.</h4>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page17">
+	<div data-role="header">
+   <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Login</h1>
+	</div>
+    
+    
+	<div data-role="content">	
+		 <p>Login
+	    <label for="textfield"></label>
+      <input type="text" name="textfield" id="Login">
+	  </p>
+	  <p>Password
+	    <label for="textfield2"></label>
+	    <input type="text" name="textfield2" id="Password">
+      </p>
+	    <input type="button" name="submit" id="submit" value="Submit">
+        
+       <h5><a href="#page29" data-role="button"> Register</a> </h5>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page18" >
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>favourite list</h1>
+	</div>
+	<div data-role="content">	
+	
+    <p>
+    
+    </p>
+ 
+  
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page19">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Tung Wah Group of Hospitals CROSS Centre</h1>
+	</div>
+	<div data-role="content">
+    <img src= "../../../extremefinal/centre/Tung Wah Group of Hospitals CROSS Centre.jpg"  width="200" height="190"class="align-right"/>
+    	<h4>Tung Wah Group of Hospitals CROSS Centre</h4>	
+		<p>Address:  Room 1501-1504, Tung Ning Building, 2 Hillier Street, Sheung Wan, Hong Kong	</p>
+        <p>Contact Number: 2884 0282</p>
+        <a href="http://crosscentre.tungwahcsd.org/">Website Link</a>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page20">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Hong Kong Lutheran Social Service
+Rainbow Lutheran Centre</h1>
+	</div>
+	<div data-role="content">
+    <img src= "../../../extremefinal/centre/Hong Kong Lutheran Social Service.jpg"  width="400" height="190"class="align-right"/>
+    	<h4>Hong Kong Lutheran Social Service
+Rainbow Lutheran Centre</h4>
+		<p>Address: 2 Horse Shoe Lane, Kwun Tong, Kowloon </p>
+        <p>Contact Number: 2712 0097</p>
+        <a href="http://rainbow-ccpsa.hklss.hk">Website Link</a>	
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page21">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Caritas HUGS Centre</h1>
+	</div>
+	<div data-role="content">	
+    <img src= "../../../extremefinal/centre/Caritas HUGS Centre.jpg"  width="200" height="190"class="align-right"/>
+    	<h4>Caritas HUGS Centre</h4>
+		<p>Address: Unit 41-44, G/F, Hing Shing House, Tai Hing Estate, Tuen Mun, N.T.</p>
+        <p>Contact Number: 2453 7030</p>	
+        <a href="../../../Users/student/Desktop/extremefinal/www.hugs.org.hk">Website Link</a>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page22">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Hong Kong Lutheran Social Service
+Cheer Lutheran Centre</h1>
+	</div>
+	<div data-role="content">	
+    <img src= "../../../extremefinal/centre/Hong Kong Lutheran Social Service Cheer Lutheran Centre.jpg"  width="200" height="190"class="align-right"/>
+    	<h4>Hong Kong Lutheran Social Service
+Cheer Lutheran Centre</h4>
+		<p>Address: G/F, Ching Chung House, Ching Ho Estate, Sheung Shui, N.T.</p>
+        <p>Contact Number: 2660 0400</p>
+        <a href="http://cheer-ccpsa.hklss.hk">Website Link</a>	
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page23">
+	<div data-role="header">
+   <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Caritas - Hong Kong</h1>
+	</div>
+	<div data-role="content">
+    <img src= "../../../extremefinal/centre/Caritas - Hong Kong.jpg"  width="400" height="190"class="align-right"/>
+    	<h4>Caritas - Hong Kong</h4>	
+		<p>Treatment centres / Halfway houses:	Caritas Wong Yiu Nam Centre</p>
+        <p>Contact Number: 2335 5088 </p>
+        <a href="../../../extremefinal/www.caritaslokheepclub.org.hk/eng/ewongyn.html	">Website Link</a>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page24">
+	<div data-role="header">
+   <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Mission Ark</h1>
+	</div>
+	<div data-role="content">
+    <img src= "../../../extremefinal/centre/Christian New Life Association.jpg"  width="350" height="190"class="align-right"/>
+    	<h4>Mission Ark</h4>	
+		<p>Treatment centres / Halfway houses:	Yuen Long Centre</p>
+        <p>Contact Number: 2397 6618</p>	
+        <a href="http://www.hknewlife.org">Website Link</a>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page25">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Christian New Being Fellowship</h1>
+	</div>
+	<div data-role="content">
+    <img src= "../../../extremefinal/centre/Christian New Being Fellowship.jpg"  width="200" height="190"class="align-right"/>	
+    	<h4>Christian New Being Fellowship</h4>
+		<p>Treatment centres / Halfway houses : Life Training Base</p>
+        <p>Contact Number: 2329 6077 </p>	
+        <a href="../../../Users/student/Desktop/extremefinal/www.newbeing.org.hk">Website Link</a>	
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="page26">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Christian Zheng Sheng Association</h1>
+	</div>
+	<div data-role="content">
+    <img src= "../../../extremefinal/centre/Christian Zheng Sheng Association.jpg"  width="350" height="200"class="align-right"/>
+    	<h4>Christian Zheng Sheng Association</h4>	
+		<p>Treatment centres / Halfway houses:	</p>
+        <p>(1)	Ha Keng Treatment and Rehabilitation Youth Centre for Male</p>
+<p>(2)	Ha Keng Treatment and Rehabilitation Female Centre</p>
+<p>(3)	Cheung Chau Male Training Centre for Youth</p>
+<p>(4)	Cheung Chau Female Training Centre</p>
+<p>(5)	Mui Wo Male Training Centre for Adult</p>
+<p>(6) Tai O Kau San Tei Male Treatment and Rehabilitation Centre for Adult</p>
+        <p>Contact Number: 9027 2547</p>
+        <a href="../../../Users/student/Desktop/extremefinal/www.hkschooltv.com/ZhengSheng/welcome.html">Website Link</a>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page27">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Operation Dawn</h1>
+	</div>
+	<div data-role="content">
+    <img src= "../../../extremefinal/centre/Operation Dawn.jpg"  width="350" height="190"class="align-right"/>
+    	<h4>Operation Dawn</h4>	
+		<p>Treatment centres / Halfway houses:	</p>
+        <p>(1)	Dawn Island Drug Treatment and Rehabilitation Centre</p>
+<p>(2)	Girl Centre</p>
+<p>(3)	Wong Tai Sin Centre (Half-way House)</p>
+        <p>Contact Number: 2714 2434</p>	
+         <a href="http://opdawn.org.hk">Website Link</a>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page28">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>St Stephen's Society</h1>
+	</div>
+	<div data-role="content">
+    <img src= "../../../extremefinal/centre/St Stephen's Society.jpg"  width="250" height="200"class="align-right"/>	
+    	<h4>St Stephen's Society</h4>
+		<p>Treatment centres / Halfway houses:	</p>
+       <p>(1)	Tuen Mun Multi-purpose Rehabilitation Home (Female)</p>
+<p>(2)	Shing Mun Springs Multi-purpose Rehabilitation Homes (Male/Female)</p>
+        <p>Contact Number: 2720 0179</p>
+        <a href="../../../Users/student/Desktop/extremefinal/www.ststephenssociety.com	">Website Link</a>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page29">
+	<div data-role="header">
+    <a href="#" data-icon="arrow-l" data-rel="back">Back</a>
+		<h1>Register</h1>
+	</div>
+	<div data-role="content">
+     <form id="myForm" action="" method="post">
+     Username
+      <input type="text" name="username" id="Registername">
+	  </br>
+	  Password
+	   <input type="text" name="password" id="Registerpassword">
+      </br>
+	    <button id="register">Submit</button>
+    </form>
+    <span id="result"></span>
+	</div>
+	<div data-role="footer">
+		<h4><a href="#page" data-icon="home" data-role="button">Back To Home Page</a></h4>
+	</div>
+</div>
+
+
+
+
+
+
+</div>
+
+</body>
+</html>
